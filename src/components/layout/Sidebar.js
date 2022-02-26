@@ -12,42 +12,55 @@ export const Sidebar = () => {
   const { selectedProject, setSelectedProject } = useContext(
     SelectedProjectContext
   );
-  const [active, setActive] = useState("INBOX");
   const [showProjects, setShowProjects] = useState(true);
   return (
     <>
       <div className="sidebar" data-testid="sidebar">
         <ul className="sidebar__generic">
-          <li data-testid="inbox" className="inbox">
+          <li
+            data-testid="inbox"
+            className={selectedProject=== "INBOX" ? "active" : ""}
+            onClick={() => {
+              setSelectedProject("INBOX");
+            }}
+          >
             <span>
               <FaInbox />
             </span>
             <span>Inbox</span>
           </li>
-          <li data-testid="today" className="today">
+          <li
+            data-testid="today"
+            className={selectedProject==='TODAY'?'active':''}
+            onClick={() => {setSelectedProject("TODAY");}}
+          >
             <span>
               <FaRegCalendar />
             </span>
             <span>Today</span>
           </li>
-          <li data-testid="next_7" className="next_7">
+          <li
+            data-testid="next_7"
+            className={selectedProject==='NEXT_7'? 'active': ''}
+            onClick={() => {setSelectedProject("NEXT_7")}}
+          >
             <span>
               <FaRegCalendarAlt />
             </span>
             <span>Next 7 Days</span>
           </li>
         </ul>
-        <div className="sidebar__middle">
+        <div className="sidebar__middle" onClick={()=>setShowProjects(!showProjects)}>
           <span>
             <FaChevronDown />
           </span>
           <h2>Projects</h2>
         </div>
         <ul className="sidebar__projects">
-          {showProjects && <Projects active={active} />}
+          {showProjects && <Projects />}
         </ul>
-    
-        {showProjects && <AddProject />}
+
+         <AddProject />
       </div>
     </>
   );
